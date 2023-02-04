@@ -89,7 +89,7 @@
         pLeftBracket = 44;
         pRightBracket = 45;
         pDotDot = 46;
-        pDoubleEqual = 47;
+        pDoubleEquals = 47;
         pNot = 48;
         pQuestion = 49;
         pDollar = 50;
@@ -111,13 +111,13 @@
 
         { S/SL Rule Table Addresses } {
         Scan = 0;
-        Identifier = 221;
-        Integer = 238;
-        Literal = 253;
-        Comment = 305;
+        Identifier = 230;
+        Integer = 247;
+        Literal = 262;
+        Comment = 314;
         }
 
         { S/SL Table Parameters }
-        sslTblSize = 330;
+        sslTblSize = 339;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;

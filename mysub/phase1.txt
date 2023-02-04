@@ -1,0 +1,69 @@
+File: stdIdentifiers
+Remove old PT keywords: 
+not 
+until 
+program 
+const 
+procedure 
+begin 
+repeat
+
+Add new Quby keywords: 
+using 
+val 
+def 
+break 
+when 
+module 
+elsif 
+unless
+
+Replace the old PT Pascal predeclared identifier: char 
+With the new Quby predefined identifier: String
+
+File: scan.ssl
+Add new Quby input character classes 
+lPercent '%' 
+lHash '#' 
+lExclamation '! 
+lQuestion '?' 
+lDollar '$'
+
+Reuse the existing IQuote character class to refer to the Quby double quote " instead of single quote '
+Add new Quby syntax tokens for the Quby keywords 
+pUsing 
+pVal 
+pDef 
+pBreak 
+pWhen 
+pModule 
+pUnless 
+pElsif 
+
+Remove old PT syntax tokens for the keywords 
+pNot 
+pUntil 
+pProgram 
+pConst 
+pProcedure 
+pBegin 
+pRepeat
+
+Add new Non Compound tokens for 
+pDoubleEquals
+pNot 
+pQuestion 
+pDollor 
+pHash
+
+Replace the single quote char literals with the double quote "" 
+Remove AlternateComment rules and update the choice for "("
+Remove .pColonEquals choice for rules
+Add .pDoubleEquals choice for rules
+Remove '<>' pNotEqual, Add '!=' pNotEqual in rules, Add "==", "!", "?", "?" in rules
+Update Comment rules for new % symbol remove "}"
+
+File: parser.pt
+After run ```make scanner``` copy the scan.def to parser.pt 
+Update charClassMap Initialization for " % # ! ? $
+Update quote assign in line 421

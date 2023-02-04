@@ -1,0 +1,5 @@
+ .pHash
+  .pStringLiteral
+  % Output token text 'Karim'
+ .pSemicolon
+ .pEndFile

@@ -132,7 +132,7 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        pDoubleEqual %New
+        pDoubleEquals %New
         pNot %New
         pQuestion %New
         pDollar %New
@@ -210,7 +210,12 @@ Scan :
                     | *:
                 ]
             | '=':
-                .pEquals
+                [
+                    | '=':
+                        .pDoubleEquals %new
+                    | *:
+                         .pEquals
+                ]   
             | '+':
                 .pPlus
             | lQuote:

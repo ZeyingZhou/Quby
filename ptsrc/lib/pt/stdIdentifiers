@@ -51,7 +51,7 @@ module %new
 % Predeclared type names
 integer
 % char delete
-string  % new
+String  % new
 boolean
 text
 

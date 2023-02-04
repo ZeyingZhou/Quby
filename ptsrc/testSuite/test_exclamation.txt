@@ -1,1 +1,2 @@
 test exclamation ! new Quby input character
+test not and notEqual
