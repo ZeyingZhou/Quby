@@ -12,7 +12,15 @@
 %     unclosed literals, literals that cross a line boundary,
 %     illegal characters and integers followed by identifiers with 
 %     no separator between them.
-
+%     Phase 1 Change notes: 
+%     Add new Quby input character classes lPercent '%' lHash '#' lExclamation '! lQuestion '?' lDollar '$'
+%     Reuse the existinrg IQuote character class to refer to the Quby double quote " instead of single quote '
+%     Add new Quby syntax tokens for the Quby keywords pUsing pVal pDef pBreak pWhen pModule pUnless pElsif 
+%     Remove old PT syntax tokens for the keywords pNot pUntil pProgram pConst pProcedure pBegin pRepeat
+%     Add new Non Compound tokens for pDoubleEqual pNot pQuestion pDollor pHash
+%     Replace the single quote char literals with the double quote "" 
+%     Remove Compound tokens pStringLiteral, Add pLiteral
+%     Remove '<>' pNotEqual, Add '!=' pNotEqual in rules, Add "==", "!", "?", "?" in rules
 Input : 
         lLetter 
         firstCharClass = lLetter 
@@ -25,7 +33,7 @@ Input :
         lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote
+        lQuote          '"' %new
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -41,40 +49,55 @@ Input :
         lCarriageReturn
         lTab
         lNewPage 
+        lPercent        '%' %new
+        lHash           '#' %new
+        lExclamation    '!' %new
+        lQuestion       '?' %new
+        lDollar         '$' %new
         lEndFile
         lastCharClass = lEndFile;
+       
 
 Output :
         % Keyword tokens -
         %   Tokens pDiv through pRepeat are keywords which will be 
         %   separated from user defined identifiers by the Screener.
         %   This Scanner treats them all as identifiers.
+
         pDiv 
         firstKeywordToken = pDiv
         pMod
         pOr
         pAnd
-        pNot
+        %pNot delete
         pThen
         pElse
         pOf
         pEnd
-        pUntil
+        %pUntil delete
         pDo
         pArray
         pFile
-        pProgram
-        pConst
+        %pProgram delete
+        %pConst delete
         pVar
         pType
-        pProcedure
-        pBegin
+        %pProcedure delete
+        %pBegin delete
         pIf
         pCase
         pWhile
-        pRepeat
-        lastKeywordToken = pRepeat
-
+        %pRepeat delete
+        pUsing %new
+        pDef %new
+        pUnless %new
+        pVal %new
+        pElsif %new
+        pBreak %new
+        pWhen %new
+        pModule %new
+        lastKeywordToken = pModule
+        
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
 
@@ -83,7 +106,7 @@ Output :
         pIdentifier 
         firstCompoundInputToken = pIdentifier
         pInteger
-        pStringLiteral
+        pStringLiteral %New
         lastCompoundInputToken = pStringLiteral
 
         % Non-compound tokens - 
@@ -93,7 +116,7 @@ Output :
         pPlus
         pMinus
         pStar
-        pColonEquals
+        %pColonEquals delete
         pDot
         pComma
         pSemicolon
@@ -109,7 +132,12 @@ Output :
         pLeftBracket
         pRightBracket
         pDotDot
-        lastSyntaxToken = pDotDot;
+        pDoubleEqual %New
+        pNot %New
+        pQuestion %New
+        pDollar %New
+        pHash %New
+        lastSyntaxToken = pHash;
 
 Error :
         eIllegalChar = 5
@@ -147,12 +175,14 @@ Scan :
             | ';':
                 .pSemicolon
             | '(':
-                [
-                    | '*':
-                        @AlternateComment
-                    | *:
-                        .pLeftParen
-                ]
+                .pLeftParen %new
+         %  | '(':
+         %      [
+         %          | '*':
+         %              @AlternateComment
+         %          | *:
+         %              .pLeftParen
+         %      ]
             | ')':
                 .pRightParen
             | '[':
@@ -162,12 +192,13 @@ Scan :
             | ',':
                 .pComma
             | ':':
-                [
-                    | '=':
-                        .pColonEquals
-                    | *:
-                        .pColon
-                ]
+                .pColon % new
+            %   [
+            %       | '=':
+            %           .pColonEquals
+            %       | *:
+            %           .pColon
+            %   ]               
             | lDigit:
                 oBufferSave
                 @Integer
@@ -183,7 +214,7 @@ Scan :
             | '+':
                 .pPlus
             | lQuote:
-                @StringLiteral
+                @Literal
             | '-':
                 .pMinus
             | '.':
@@ -195,8 +226,8 @@ Scan :
                 ]
             | '<':
                 [
-                    | '>':
-                        .pNotEqual
+                 %  | '>':
+                 %      .pNotEqual
                     | '=':
                         .pLessEqual
                     | *:
@@ -209,8 +240,25 @@ Scan :
                     | *:
                         .pGreater
                 ]
-            | '{':
+         % | '{':
+         %     @Comment
+            | '%':
                 @Comment
+%%% new
+            | '!':
+                [
+                    | '=':
+                        .pNotEqual
+                    | *:
+                        .pNot
+                ]
+            | '?':
+                .pQuestion
+            | '$':
+                .pDollar
+            | '#':
+                .pHash 
+%%% new
             | '*':
                 .pStar
             | lNewPage:
@@ -244,7 +292,7 @@ Integer :
                 >
         ]};
 
-StringLiteral :
+Literal :
         % Assemble a literal string token
 
         {[
@@ -278,10 +326,13 @@ Comment :
         % Discard the contents of a comment
 
         {[
-            | '}':
-                >
-            | lNewLine:
+            | lNewLine: 
                 .pNewLine
+                >
+       %    | '}':  Closed lRightBracket does not need any more
+       %        >
+       %    | lNewLine:
+       %        .pNewLine
             | lEndFile:         % comment must be closed before EOF
                 #eCommentEOF
                 .pEndFile
@@ -289,23 +340,19 @@ Comment :
             | *:        % comment may contain any other character
                 ?
         ]};
-
-AlternateComment :
-        {[
-            | '*':
-                [
-                    | ')':
-                        >
-                    | *:
-                ]
-            | lNewLine:
-                .pNewLine
-            | lEndFile:
-                #eCommentEOF
-                .pEndFile
-                >
-            | *:
-                ?
-        ]};
-
+%%% delete
+%AlternateComment :
+%        {[
+%            | '%':
+%                >
+%            | lNewLine:
+%                .pNewLine
+%            | lEndFile:
+%                #eCommentEOF
+%                .pEndFile
+%                >
+%            | *:
+%                ?
+%        ]};
+%%% delete
 end
