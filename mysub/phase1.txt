@@ -67,3 +67,4 @@ File: parser.pt
 After run ```make scanner``` copy the scan.def to parser.pt 
 Update charClassMap Initialization for " % # ! ? $
 Update quote assign in line 421
+Change the maxStdIdentifiers assignment from 50 to 43

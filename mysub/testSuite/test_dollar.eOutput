@@ -1,0 +1,9 @@
+  .pStringLiteral
+  % Output token text 'Hi there'
+ .pDollar
+  .pInteger
+  % Output token text '4'
+ .pDotDot
+  .pInteger
+  % Output token text '6'
+ .pEndFile

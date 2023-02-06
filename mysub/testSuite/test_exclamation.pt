@@ -1,0 +1,6 @@
+!
+
+if test != "world" then {
+    
+}
+end

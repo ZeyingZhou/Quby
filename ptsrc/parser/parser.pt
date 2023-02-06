@@ -395,7 +395,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { Translator limits }
         scanTableSize = 1000;        { max }
         parseTableSize = 3000;       { max }
-        maxStdIdentifiers = 50;
+        maxStdIdentifiers = 43;      {change from 50 to 43}
         textBufferSize = 200;
         identTableSize = 1601;       { must be prime }
         identTextSize = 16000;

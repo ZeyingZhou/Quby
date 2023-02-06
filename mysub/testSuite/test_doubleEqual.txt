@@ -1,0 +1,1 @@
+test new Quby syntax symbols double equals ==

@@ -1,0 +1,17 @@
+ .pNot
+ .pNewLine
+ .pNewLine
+  .pIdentifier (screened to pIf)
+  .pIdentifier
+  % Output token text 'test'
+ .pNotEqual
+  .pStringLiteral
+  % Output token text 'world'
+  .pIdentifier (screened to pThen)
+ #eIllegalChar
+ .pNewLine
+ .pNewLine
+ #eIllegalChar
+ .pNewLine
+  .pIdentifier (screened to pEnd)
+ .pEndFile
