@@ -1,0 +1,4 @@
+using output
+module M
+    val a = 3
+end

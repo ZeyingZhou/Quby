@@ -59,7 +59,7 @@
         pDef = 17;
         pUnless = 18;
         pVal = 19;
-        pElsif = 20;
+        pElsIf = 20;
         pBreak = 21;
         pWhen = 22;
         pModule = 23;

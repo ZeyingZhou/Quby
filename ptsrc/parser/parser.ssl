@@ -64,7 +64,7 @@ Input :
 
         % Non-compound tokens - 
         %   These tokens simply represent themselves.
-        pNewLine
+        pNewLine              
         pEndFile
         pPlus                   '+'
         pMinus                  '-'
@@ -156,16 +156,14 @@ Output :
         sIndex
         sElsif
         % new
-        lastSemanticToken = sEndOfFile;
+        lastSemanticToken = sElsif;
 
 
 rules
 
 Program :
-        % 'program'  .sProgram remove
         'using'  .sProgram % new
         % program name
-        pIdentifier
         % program parameters
         % '(' remove
         {
@@ -177,8 +175,8 @@ Program :
             ]
         }
         % ')' remove
-        .sParmEnd
-        @Block;
+        .sParmEnd 
+        @Statement;
         % ';' @Block  '.';
 
 Block :
@@ -191,15 +189,16 @@ Block :
             % | 'const':
             %     .sConst
             %     @ConstantDefinitions
+            | 'val':
+                .sConst
+                @ConstantDefinitions
             | 'type':
                 .sType
                 @TypeDefinitions
             | 'var':
                 .sVar
                 @VariableDeclarations
-            | 'val':
-                .sConst
-                @ConstantDefinitions
+        
             % | 'procedure':
             %     .sProcedure
             %     % procedure name
@@ -214,16 +213,13 @@ Block :
                         .sPublic
                     | *:
                         pIdentifier .sIdentifier
-                        >
                 ]
                 @ProcedureHeading
-                @Block
-                'end'
+                @Block 'end'
             | 'module':
                 .sModule
                 pIdentifier .sIdentifier
-                @Block
-                'end'
+                @Block 'end'
             | pIdentifier:
                 @AssignmentOrCallStmt
             % | 'begin':
@@ -232,17 +228,15 @@ Block :
                 @IfStmt
                 'end'
             | 'unless': %new
-                @UnlessStmt  %new
-                'end' %new
+                @UnlessStmt  
             | 'while':
                 @WhileStmt
-                'end'
             | 'case':
                 @CaseStmt
-                'end'
             | 'do':
                 @DoStmt
-                'end'
+            | ';':
+                .sNullStmt
             % | 'repeat':
             %     @RepeatStmt
             % | *:
@@ -293,7 +287,7 @@ UnsignedIntegerConstant :
 TypeDefinitions :
         % Accept one or more named type definitions.
         pIdentifier  .sIdentifier
-        '='  @TypeBody  ;
+        ':'  @TypeBody  ;
         % '='  @TypeBody  ';'
         % {[
         %     | pIdentifier:
@@ -352,8 +346,6 @@ VariableDeclarations :
             | ',':
                 .sVar
                 pIdentifier .sIdentifier
-            | ':':
-                @TypeBody 
             | *:
                 >
         ]}
@@ -369,8 +361,10 @@ VariableDeclarations :
 
 ProcedureHeading :
         % Accept zero or more procedure formal parameter declarations.
+        '('
         [
-            | '(':
+            | ')':
+            | *:
                 {
                     % formal parameter identifier
                     [
@@ -384,15 +378,13 @@ ProcedureHeading :
                     % type identifier
                     pIdentifier  .sIdentifier
                     [
-                        | ';':
+                        | ',':
                         | *:
                             >
                     ]
                 }
                 ')'
-            | *:
         ]
-        ';'
         .sParmEnd;
 
 Statement :
@@ -481,10 +473,11 @@ IfStmt :
         .sExpnEnd
         'then'  .sThen
         @Block
-        [
+        {[
             | 'else':
                 .sElse
                 @Block
+                >
             | 'elsif':
                 .sElsif
                 @Expression
@@ -492,7 +485,7 @@ IfStmt :
                 'then'  .sThen
                 @Block
             | *:
-        ];
+        ]};
 
 UnlessStmt :
         .sIfStmt
@@ -506,7 +499,8 @@ UnlessStmt :
                 .sElse
                 @Block
             | *:
-        ];
+        ]
+        'end';
 
 CaseStmt :
         .sCaseStmt
@@ -522,15 +516,14 @@ CaseStmt :
                 >
             | 'when':
                 @CaseAlternative
-            | 'end':
+            | *:
                 >
         ]}
-        .sCaseEnd;
+        'end' .sCaseEnd;
 
 CaseAlternative :
         % A case alternative is a statement labelled by
         % one or more optionally signed integer constants
-
         {
             @OptionallySignedIntegerConstant
             [
@@ -539,7 +532,7 @@ CaseAlternative :
                     >
             ]
         }
-        .sLabelEnd
+        % .sLabelEnd remove
           'then'  @Block;
         % ':'  @Statement;
 
@@ -549,24 +542,13 @@ WhileStmt :
         .sExpnEnd
         'do'
         % @Statement
-        @Block;
+        @Block 'end';
 
 DoStmt:
     .sDo
     @Block
-    {[
-        | 'break': 
-            [
-                | 'if':
-                    .sBreakif
-                    @Expression
-                    .sExpnEnd
-            ]
-        |  'end':
-            >
-        | *:
-                @Block
-    ]};
+    'break' 'if' .sBreakIf @Expression .sExpnEnd
+    @Block 'end';
 
     
 % RepeatStmt :
@@ -624,23 +606,29 @@ SimpleExpression :
         ]};
 
 Term :
+        @Dollar
+        {[
+            | '*':
+                @Dollar  .sMultiply
+            | 'div':
+                @Dollar  .sDivide
+            | 'mod':
+                @Dollar  .sModulus
+            | 'and':
+                .sInfixAnd  @Dollar  .sAnd
+            | '?':
+                @Dollar .sIndex
+            | *:
+                >
+        ]};
+
+
+Dollar :
         @Factor
         {[
             | '$':
-                @Factor          
-                '..'
-                @Factor
+                @Factor '..' @Factor
                 .sSubstring
-            | '*':
-                @Factor  .sMultiply
-            | 'div':
-                @Factor  .sDivide
-            | 'mod':
-                @Factor  .sModulus
-            | 'and':
-                .sInfixAnd  @Factor  .sAnd
-            | '?':
-                @Factor .sIndex
             | *:
                 >
         ]};

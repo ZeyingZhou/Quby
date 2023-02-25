@@ -1,0 +1,11 @@
+using output
+val x = 3
+var y : integer
+va; z = 2
+if x == 1 then
+    y = 2
+elsif z == 2 then
+    y = 3
+else
+    y = 4
+end

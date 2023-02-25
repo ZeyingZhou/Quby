@@ -1,0 +1,10 @@
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+   .sConst
+    .sIdentifier
+     scan/parse error, line 2: syntax error at: #
+     .sInteger
+   .sEnd

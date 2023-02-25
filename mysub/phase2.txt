@@ -1,0 +1,31 @@
+File: parser.ssl
+Remove old input tokens: pNot pUntil pProgram pConst pProcedure pBegin pRepeat 
+Add the new Quby input tokens: pUsing pVal pDef pUnless pElsif pBreak pWhen pModule 
+Remove pColonEquals Update pNotEqual <> to != Add pDoubleEqual pNot pQuestion pDollar pHash
+Remove old PT parser output tokens sRepeatStmt sRepeatEnd  
+Add new Quby parser output tokens 
+sPublic sModule sDo sBreakif sSubstring sLength sIndex sElsif 
+Update rules 
+Program: 'using'
+Block: variable declarations, merge Statement to Block
+ConstantDefinitions
+TypeDefinitions 
+VariableDeclarations 
+ProcedureHeading 
+AssignmentOrCallStmt 
+UnlessStmt 
+CaseStmt
+WhileStmt:
+RepeatStmt: Remove RepeatStmt no longer need
+IfStmt: elsif and else
+DoStmt: new rule for do statement
+Expression: 
+Term: add ? alternative
+Factor: add # ! alternative
+Dollar: new Rule for precedence of $
+
+File: parser.pt
+Update the Semantic Operations by copy parser.def
+
+Test:
+Create New Test for testing the parser

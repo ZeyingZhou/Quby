@@ -1,0 +1,8 @@
+using output
+def * P ()
+    val x = 5
+end
+
+def X ()
+    val y =5
+end

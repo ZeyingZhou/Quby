@@ -119,7 +119,7 @@
         sLength = 52;
         sIndex = 53;
         sElsif = 54;
-        lastSemanticToken = 46;
+        lastSemanticToken = 54;
 
         { Input/Output Tokens }
 
@@ -129,35 +129,36 @@
 
         { S/SL Rule Table Addresses } {
         Program = 0;
-        Block = 26;
-        TypeDefinitions = 222;
-        VariableDeclarations = 312;
-        ConstantDefinitions = 153;
-        ProcedureHeading = 344;
-        AssignmentOrCallStmt = 395;
-        IfStmt = 505;
-        UnlessStmt = 545;
-        WhileStmt = 635;
-        CaseStmt = 571;
-        DoStmt = 646;
-        ConstantValue = 162;
-        UnsignedIntegerConstant = 202;
-        TypeBody = 231;
-        SimpleType = 263;
-        OptionallySignedIntegerConstant = 292;
-        Statement = 392;
-        Expression = 685;
-        CallStmt = 435;
-        BeginStmt = 479;
-        CaseAlternative = 615;
-        SimpleExpression = 739;
-        Term = 792;
-        Factor = 856;
-        IdentifierExtension = 922;
+        Statement = 380;
+        Block = 24;
+        ConstantDefinitions = 147;
+        TypeDefinitions = 216;
+        VariableDeclarations = 306;
+        ProcedureHeading = 332;
+        AssignmentOrCallStmt = 383;
+        IfStmt = 493;
+        UnlessStmt = 537;
+        WhileStmt = 621;
+        CaseStmt = 565;
+        DoStmt = 634;
+        ConstantValue = 156;
+        UnsignedIntegerConstant = 196;
+        TypeBody = 225;
+        SimpleType = 257;
+        OptionallySignedIntegerConstant = 286;
+        Expression = 653;
+        CallStmt = 423;
+        BeginStmt = 467;
+        CaseAlternative = 603;
+        SimpleExpression = 707;
+        Term = 760;
+        Dollar = 812;
+        Factor = 834;
+        IdentifierExtension = 900;
         }
 
         { S/SL Table Parameters } {
-        sslTblSize = 952;
+        sslTblSize = 930;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
 	}

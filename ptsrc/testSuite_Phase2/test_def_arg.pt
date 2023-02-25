@@ -1,0 +1,8 @@
+using output
+def * P (var x : integer)
+    val x = 5
+end
+
+def X (var x : integer, var z : integer)
+    val y = 5
+end

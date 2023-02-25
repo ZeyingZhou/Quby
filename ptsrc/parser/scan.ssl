@@ -12,15 +12,6 @@
 %     unclosed literals, literals that cross a line boundary,
 %     illegal characters and integers followed by identifiers with 
 %     no separator between them.
-%     Phase 1 Change notes: 
-%     Add new Quby input character classes lPercent '%' lHash '#' lExclamation '! lQuestion '?' lDollar '$'
-%     Reuse the existinrg IQuote character class to refer to the Quby double quote " instead of single quote '
-%     Add new Quby syntax tokens for the Quby keywords pUsing pVal pDef pBreak pWhen pModule pUnless pElsif 
-%     Remove old PT syntax tokens for the keywords pNot pUntil pProgram pConst pProcedure pBegin pRepeat
-%     Add new Non Compound tokens for pDoubleEqual pNot pQuestion pDollor pHash
-%     Replace the single quote char literals with the double quote "" 
-%     Remove Compound tokens pStringLiteral, Add pLiteral
-%     Remove '<>' pNotEqual, Add '!=' pNotEqual in rules, Add "==", "!", "?", "?" in rules
 Input : 
         lLetter 
         firstCharClass = lLetter 
@@ -69,30 +60,23 @@ Output :
         pMod
         pOr
         pAnd
-        %pNot delete
         pThen
         pElse
         pOf
         pEnd
-        %pUntil delete
         pDo
         pArray
         pFile
-        %pProgram delete
-        %pConst delete
         pVar
         pType
-        %pProcedure delete
-        %pBegin delete
         pIf
         pCase
         pWhile
-        %pRepeat delete
         pUsing %new
         pDef %new
         pUnless %new
         pVal %new
-        pElsif %new
+        pElsIf %new
         pBreak %new
         pWhen %new
         pModule %new
@@ -116,7 +100,6 @@ Output :
         pPlus
         pMinus
         pStar
-        %pColonEquals delete
         pDot
         pComma
         pSemicolon
@@ -175,14 +158,7 @@ Scan :
             | ';':
                 .pSemicolon
             | '(':
-                .pLeftParen %new
-         %  | '(':
-         %      [
-         %          | '*':
-         %              @AlternateComment
-         %          | *:
-         %              .pLeftParen
-         %      ]
+                .pLeftParen 
             | ')':
                 .pRightParen
             | '[':
@@ -192,13 +168,7 @@ Scan :
             | ',':
                 .pComma
             | ':':
-                .pColon % new
-            %   [
-            %       | '=':
-            %           .pColonEquals
-            %       | *:
-            %           .pColon
-            %   ]               
+                .pColon   
             | lDigit:
                 oBufferSave
                 @Integer
@@ -231,8 +201,6 @@ Scan :
                 ]
             | '<':
                 [
-                 %  | '>':
-                 %      .pNotEqual
                     | '=':
                         .pLessEqual
                     | *:
@@ -245,11 +213,8 @@ Scan :
                     | *:
                         .pGreater
                 ]
-         % | '{':
-         %     @Comment
             | '%':
                 @Comment
-%%% new
             | '!':
                 [
                     | '=':
@@ -277,7 +242,6 @@ Scan :
 
 Identifier :
         % Assemble an identifier token
-
         {[
             | lLetter, lDigit:
                 oBufferSave
@@ -288,7 +252,6 @@ Identifier :
 
 Integer :
         % Assemble an integer token
-
         {[
             | lDigit:
                 oBufferSave
@@ -299,7 +262,6 @@ Integer :
 
 Literal :
         % Assemble a literal string token
-
         {[
             | lQuote:
                 [
@@ -329,15 +291,10 @@ Literal :
 
 Comment :
         % Discard the contents of a comment
-
         {[
             | lNewLine: 
                 .pNewLine
                 >
-       %    | '}':  Closed lRightBracket does not need any more
-       %        >
-       %    | lNewLine:
-       %        .pNewLine
             | lEndFile:         % comment must be closed before EOF
                 #eCommentEOF
                 .pEndFile
@@ -345,19 +302,4 @@ Comment :
             | *:        % comment may contain any other character
                 ?
         ]};
-%%% delete
-%AlternateComment :
-%        {[
-%            | '%':
-%                >
-%            | lNewLine:
-%                .pNewLine
-%            | lEndFile:
-%                #eCommentEOF
-%                .pEndFile
-%                >
-%            | *:
-%                ?
-%        ]};
-%%% delete
 end

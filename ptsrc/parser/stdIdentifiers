@@ -14,33 +14,26 @@ div
 mod
 or
 and
-% not delete
 then
 else
 of
 end
-% until delete
 do
 array
 file
-% program delete
-% const delete
 var
 type
-% procedure delete
-% begin delete
 if
 case
 while
-% repeat delete
-using %new
-val %new
-def %new
-unless %new
-elsif %new
-break %new
-when %new
-module %new
+using 
+val 
+def 
+unless 
+elsif 
+break
+when 
+module 
 
 % End of keywords
 
@@ -50,8 +43,7 @@ module %new
 
 % Predeclared type names
 integer
-% char delete
-String  % new
+string  
 boolean
 text
 
