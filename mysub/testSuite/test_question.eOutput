@@ -1,7 +1,16 @@
-  .pStringLiteral
-  % Output token text 'Hello there'
- .pQuestion
-  .pStringLiteral
-  % Output token text 'the'
- .pSemicolon
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+   .sConst
+    .sIdentifier
+     % .sNewLine
+     .sStringLiteral
+    .sAssignmentStmt
+    .sIdentifier
+         .sIdentifier
+         .sStringLiteral
+       .sIndex
+    .sExpnEnd
+   .sEnd

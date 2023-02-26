@@ -1,3 +1,16 @@
-  .pIdentifier
-  % Output token text 'module'
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+   .sModule
+   % .sNewLine
+   .sIdentifier
+    .sBegin
+    .sConst
+     .sIdentifier
+      % .sNewLine
+      .sInteger
+    .sEnd
+   % .sNewLine
+   .sEnd

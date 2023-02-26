@@ -1,0 +1,8 @@
+test multiple variable declare, should match the order of the given example
+   .sVar
+    .sIdentifier
+    .sVar
+    .sIdentifier
+    .sVar
+    .sIdentifier
+      .sIdentifier

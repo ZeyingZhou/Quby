@@ -295,10 +295,10 @@ Comment :
             | lNewLine: 
                 .pNewLine
                 >
-            | lEndFile:         % comment must be closed before EOF
-                #eCommentEOF
-                .pEndFile
-                >
+            % | lEndFile:         % comment must be closed before EOF
+            %     #eCommentEOF
+            %     .pEndFile
+            %     >
             | *:        % comment may contain any other character
                 ?
         ]};

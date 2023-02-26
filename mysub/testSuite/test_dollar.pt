@@ -1,1 +1,2 @@
-"Hi there" $4..6
+using output
+s = "Hi there" $ 1 .. 2

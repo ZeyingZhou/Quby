@@ -1,0 +1,10 @@
+using output
+val i = 42
+case i 
+    when 42 then
+        val y = 5
+    when 43 then
+        val z = 8
+    else 
+        val x = 9
+end

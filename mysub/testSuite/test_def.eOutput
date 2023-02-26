@@ -1,3 +1,29 @@
-  .pIdentifier
-  % Output token text 'def'
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+   .sProcedure
+   .sIdentifier
+   .sPublic
+    % .sNewLine
+    .sParmEnd
+    .sBegin
+    .sConst
+     .sIdentifier
+      % .sNewLine
+      .sInteger
+    .sEnd
+   % .sNewLine
+   % .sNewLine
+   .sProcedure
+   .sIdentifier
+    % .sNewLine
+    .sParmEnd
+    .sBegin
+    .sConst
+     .sIdentifier
+      % .sNewLine
+      .sInteger
+    .sEnd
+   .sEnd

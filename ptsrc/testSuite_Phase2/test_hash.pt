@@ -1,2 +1,2 @@
 using output
-val length = #"Karim"
+length = # "Karim"

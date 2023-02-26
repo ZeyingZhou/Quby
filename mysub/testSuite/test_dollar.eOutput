@@ -1,9 +1,14 @@
-  .pStringLiteral
-  % Output token text 'Hi there'
- .pDollar
-  .pInteger
-  % Output token text '4'
- .pDotDot
-  .pInteger
-  % Output token text '6'
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+    .sAssignmentStmt
+    .sIdentifier
+         .sStringLiteral
+         .sInteger
+         % .sNewLine
+         .sInteger
+        .sSubstring
+    .sExpnEnd
+   .sEnd

@@ -1,31 +1,32 @@
-File: parser.ssl
-Remove old input tokens: pNot pUntil pProgram pConst pProcedure pBegin pRepeat 
-Add the new Quby input tokens: pUsing pVal pDef pUnless pElsif pBreak pWhen pModule 
-Remove pColonEquals Update pNotEqual <> to != Add pDoubleEqual pNot pQuestion pDollar pHash
-Remove old PT parser output tokens sRepeatStmt sRepeatEnd  
-Add new Quby parser output tokens 
-sPublic sModule sDo sBreakif sSubstring sLength sIndex sElsif 
-Update rules 
-Program: 'using'
-Block: variable declarations, merge Statement to Block
-ConstantDefinitions
-TypeDefinitions 
-VariableDeclarations 
-ProcedureHeading 
-AssignmentOrCallStmt 
-UnlessStmt 
-CaseStmt
-WhileStmt:
-RepeatStmt: Remove RepeatStmt no longer need
-IfStmt: elsif and else
-DoStmt: new rule for do statement
-Expression: 
-Term: add ? alternative
-Factor: add # ! alternative
-Dollar: new Rule for precedence of $
+File: parser.ssl:
+-Remove old input tokens: pNot pUntil pProgram pConst pProcedure pBegin pRepeat 
+-Add the new Quby input tokens: pUsing pVal pDef pUnless pElsif pBreak pWhen pModule 
+-Remove pColonEquals Update pNotEqual <> to != Add pDoubleEqual pNot pQuestion pDollar pHash
+-Remove old PT parser output tokens sRepeatStmt sRepeatEnd  
+-Add new Quby parser output tokens 
+-sPublic sModule sDo sBreakif sSubstring sLength sIndex sElsif 
+
+-Update rules 
+-Program: use 'using' instead of 'program'
+-Block: variable declarations, merge Statement to Block
+-ConstantDefinitions: Remove multiple declare 
+-TypeDefinitions: Update use ':' instead of '=' for type define Remove multiple declare 
+-VariableDeclarations: remove ;, accept multiple variable declaration with ,
+-ProcedureHeading: Update for procedure, accepting multiple variable
+-AssignmentOrCallStmt: Update ':=' label to '=' 
+-RepeatStmt: Remove RepeatStmt no longer need
+-IfStmt: elsif and else, in this phase we choose to use choice(a) which use a new semantic token sElsif to represent elsif, and modify the semantic phase of the compiler to handle it in the nxt phase
+-UnlessStmt:new rule for Quby which represent if not
+-CaseStmt: Case Statament now use when for the case, remove semicolon label add else and when label in the choice action
+-WhileStmt: Change @Statement to @Block but it's same since Statement merge to Block
+-DoStmt: new rule for do statement
+-Expression: Update '=' label to '==', '<>' label to '!='
+-Term: add ? label, update call rules from @Factor to @Dollar
+-Factor: Update 'not' label to '!' since ! represent not 
+-Dollar: new Rule for introducing a new precedence level for $ higher than * div mod lower than not
 
 File: parser.pt
-Update the Semantic Operations by copy parser.def
+-Update the Semantic Operations by copy parser.def
 
 Test:
-Create New Test for testing the parser
+-Create New Test for testing the parser

@@ -1,1 +1,3 @@
-"Hello there" ? "the" ;
+using output
+val s = "Hello"
+e = s ? "e"

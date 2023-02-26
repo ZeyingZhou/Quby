@@ -1,5 +1,11 @@
- .pHash
-  .pStringLiteral
-  % Output token text 'Karim'
- .pSemicolon
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+    .sAssignmentStmt
+    .sIdentifier
+          .sStringLiteral
+         .sLength
+    .sExpnEnd
+   .sEnd

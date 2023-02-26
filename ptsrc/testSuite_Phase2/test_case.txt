@@ -1,0 +1,2 @@
+test case statement
+case statement should call @Block three times and declare constant three times

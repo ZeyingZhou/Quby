@@ -512,7 +512,7 @@ CaseStmt :
         {[
             | 'else':
                 .sElse
-                @CaseAlternative
+                @Block
                 >
             | 'when':
                 @CaseAlternative

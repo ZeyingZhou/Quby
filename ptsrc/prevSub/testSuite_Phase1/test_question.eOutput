@@ -1,0 +1,7 @@
+  .pStringLiteral
+  % Output token text 'Hello there'
+ .pQuestion
+  .pStringLiteral
+  % Output token text 'the'
+ .pSemicolon
+ .pEndFile

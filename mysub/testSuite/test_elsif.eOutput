@@ -1,3 +1,55 @@
-  .pIdentifier
-  % Output token text 'elsif'
- .pEndFile
+ .sProgram
+ % .sNewLine
+ .sIdentifier
+ .sParmEnd
+   .sBegin
+   .sConst
+    .sIdentifier
+     % .sNewLine
+     .sInteger
+   .sVar
+    .sIdentifier
+      % .sNewLine
+      .sIdentifier
+   .sConst
+    .sIdentifier
+     % .sNewLine
+     .sInteger
+    .sIfStmt
+         .sIdentifier
+         .sInteger
+     .sEq
+    .sExpnEnd
+    % .sNewLine
+    .sThen
+     .sBegin
+      .sAssignmentStmt
+      .sIdentifier
+           % .sNewLine
+           .sInteger
+      .sExpnEnd
+     .sEnd
+    .sElsif
+         .sIdentifier
+         .sInteger
+     .sEq
+    .sExpnEnd
+    % .sNewLine
+    .sThen
+     .sBegin
+      .sAssignmentStmt
+      .sIdentifier
+           % .sNewLine
+           .sInteger
+      .sExpnEnd
+     .sEnd
+    % .sNewLine
+    .sElse
+     .sBegin
+      .sAssignmentStmt
+      .sIdentifier
+           % .sNewLine
+           .sInteger
+      .sExpnEnd
+     .sEnd
+   .sEnd

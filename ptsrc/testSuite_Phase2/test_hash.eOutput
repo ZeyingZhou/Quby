@@ -3,8 +3,9 @@
  .sIdentifier
  .sParmEnd
    .sBegin
-   .sConst
+    .sAssignmentStmt
     .sIdentifier
-     scan/parse error, line 2: syntax error at: #
-     .sInteger
+          .sStringLiteral
+         .sLength
+    .sExpnEnd
    .sEnd

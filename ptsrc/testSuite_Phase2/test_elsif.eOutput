@@ -11,18 +11,13 @@
     .sIdentifier
       % .sNewLine
       .sIdentifier
-     .sCallStmt
-     .sIdentifier
-     .sParmEnd
-   .sNullStmt
-    .sAssignmentStmt
+   .sConst
     .sIdentifier
-        % .sNewLine
-        .sInteger
-    .sExpnEnd
+     % .sNewLine
+     .sInteger
     .sIfStmt
-        .sIdentifier
-        .sInteger
+         .sIdentifier
+         .sInteger
      .sEq
     .sExpnEnd
     % .sNewLine
@@ -30,13 +25,13 @@
      .sBegin
       .sAssignmentStmt
       .sIdentifier
-          % .sNewLine
-          .sInteger
+           % .sNewLine
+           .sInteger
       .sExpnEnd
      .sEnd
     .sElsif
-        .sIdentifier
-        .sInteger
+         .sIdentifier
+         .sInteger
      .sEq
     .sExpnEnd
     % .sNewLine
@@ -44,8 +39,8 @@
      .sBegin
       .sAssignmentStmt
       .sIdentifier
-          % .sNewLine
-          .sInteger
+           % .sNewLine
+           .sInteger
       .sExpnEnd
      .sEnd
     % .sNewLine
@@ -53,8 +48,8 @@
      .sBegin
       .sAssignmentStmt
       .sIdentifier
-          % .sNewLine
-          .sInteger
+           % .sNewLine
+           .sInteger
       .sExpnEnd
      .sEnd
    .sEnd

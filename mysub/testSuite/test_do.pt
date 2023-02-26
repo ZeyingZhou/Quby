@@ -1,0 +1,8 @@
+using output
+var x : integer
+x = 0
+do
+    x = x + 1
+    break if true
+    val y = 5
+end
