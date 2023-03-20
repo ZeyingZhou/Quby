@@ -1,4 +1,6 @@
 using output
 val x = 1
 case x
+    else
+    ;
 end

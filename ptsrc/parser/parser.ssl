@@ -176,7 +176,7 @@ Program :
         }
         % ')' remove
         .sParmEnd 
-        @Statement;
+        @Block;
         % ';' @Block  '.';
 
 Block :
@@ -472,20 +472,49 @@ IfStmt :
         @Expression
         .sExpnEnd
         'then'  .sThen
+        
+        %% REMOVED
+        %@Statement
+        %%
+        %% ADDED
         @Block
-        {[
+        %%
+        [
             | 'else':
                 .sElse
+                %% REMOVED
+                %@Statement
+                %%
+                %% ADDED
                 @Block
-                >
+                %%
+            %% ADDED
             | 'elsif':
-                .sElsif
-                @Expression
-                .sExpnEnd
-                'then'  .sThen
-                @Block
+                .sElse
+                .sBegin
+                @IfStmt
+                .sEnd
+            %%
             | *:
-        ]};
+        ] ;
+        % .sIfStmt
+        % @Expression
+        % .sExpnEnd
+        % 'then'  .sThen
+        % @Block
+        % {[
+        %     | 'else':
+        %         .sElse
+        %         @Block
+        %         >
+        %     | 'elsif':
+        %         .sElsif
+        %         @Expression
+        %         .sExpnEnd
+        %         'then'  .sThen
+        %         @Block
+        %     | *:
+        % ]};
 
 UnlessStmt :
         .sIfStmt
@@ -506,20 +535,31 @@ CaseStmt :
         .sCaseStmt
         @Expression
         .sExpnEnd
-        'when'
-        %'of'
-        @CaseAlternative
-        {[
+         {[
+            %% ADDED
+            | 'when':
+                @CaseAlternative
             | 'else':
                 .sElse
                 @Block
+                'end'
                 >
-            | 'when':
-                @CaseAlternative
-            | *:
+            %%
+
+            | ';':
+                % since case alternatives cannot be null, allow
+                % for the common situation of an extra semicolon
+                % at the end of the list of case alternatives.
+                [
+                    | 'end':
+                        >
+                    | *:
+                        @CaseAlternative
+                ]
+            | 'end':
                 >
         ]}
-        'end' .sCaseEnd;
+        .sCaseEnd;
 
 CaseAlternative :
         % A case alternative is a statement labelled by
@@ -532,7 +572,7 @@ CaseAlternative :
                     >
             ]
         }
-        % .sLabelEnd remove
+        .sLabelEnd
           'then'  @Block;
         % ':'  @Statement;
 

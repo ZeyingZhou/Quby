@@ -1,1 +1,0 @@
-test hash , should output the token .sStringLiteral and .sLength

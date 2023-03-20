@@ -1,1 +1,1 @@
-test variable declaration
+test multiple variable declaration

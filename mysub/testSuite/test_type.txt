@@ -1,1 +1,1 @@
-test type define
+test type define and declaration

@@ -19,6 +19,10 @@
    % value emitted 32767
    % value emitted -32767
    % value emitted -1
+   .tCaseElse
+   .tCaseMerge
+   oEmitNullAddress
+   % value emitted -32767
  .tTrapBegin
  .tTrap
  oEmitTrapKind(trHalt)

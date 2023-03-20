@@ -1,2 +1,0 @@
-using output
-s = "Hi there" $ 1 .. 2

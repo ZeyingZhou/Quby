@@ -1,4 +1,0 @@
-using output
-unless x == y then 
-    z = w
-end

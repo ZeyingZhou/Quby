@@ -1,0 +1,45 @@
+parser.ssl:
+-(470 - 517)Modify IfStmt to use first choice handle the elsif in order to save the work for the semantic.ssl
+-(534 - 562)Update CaseStmt rule based on the phase2 Solution
+
+semantic.ssl:
+-(18 - 83)Change the Input semantic token definition in semantical.ssl to be the same as the Output semantic tokens in your parser=.ssl 
+-(85 - 187)Add new T code: tConcatenate  tFetchString tAssignString tStoreParmString tSubscriptString tSubstring tLength tStringEqual tDoBegin tDoBreakif tDoTest tDoEnd tCaseElse
+ Remove T code: tFetchChar tAssignChar tStoreChar tSubscriptChar tLiteralChar
+-(240)Add a definition for stringSize to the type integer, value is 1024
+-(285 - 286)In type StdType change stdChar to stdString
+-(314 - 317)Add the new oSymbolTblStripScope and oSymbolTblMergeScope operations to the SymbolTable mechanism
+-(336 - 337)Add syModule, syPublicProcedure to the type SymbolKind 
+-(453 - 459)In TypeKind change the type kind for char(tpChar) to be for string (tpString)
+ Change all uses of the char type in the whole S/SL source to use the string type instead.
+-(553 - 559)In TrapKind, add trWriteString = 109, trReadString = 108, Remove trWriteChar and trReadChar
+ Change all uses of the char traps in the S/SL to use the string traps instead
+-(1279 - 1306)Add a new rule ModuleDefinition to handle modules. Module Definition is much like the procedure Definition in PT but with no program parameters and no halt
+-(815 - 848, 1458 - 1461)Merge Statement rule to Block rule, remove handling of the begin statement and 
+-(815 - 848)add sBegin and sEnd token at the beginning and end of the Block rule instead
+-(1458 - 1461)In addition, add oSymbolTblPushScope and oSymbolTblPopScope at the beginning and end of the Statement rule
+-(851 - 879)Modify handling of constant definitions to allow only one per definition by removing the loop 
+-(938 - 962)Modify handling of type definitions to allow only one per definition by removing the loop 
+-(1144 - 1183)Modify handling of variable declarations to allow multiple identifiers declared using one type
+ Need to push all the declared Identifiers on the Symbol Stack and use Count Stack to count how many declared Identifiers
+ Using loop to push the declared Identifier one at a time into Symbol Stack and use oCountIncrement to increment the count
+ After TypeBody will determine the type of the varaible and use loop and OCountDecrement to enter the varaiable attibute one a time
+-(1308 - 1355)Change handling of procedure definitions to recognize public by add choice sPublic and set Kind for the syPublicProcedure
+-(1695 - 1707)Remove the Repeat Rule since no longer need, Instead add handling of the general do loop statement
+-(1709 - 1723)Handling do statement is just like while statement except T code different and there is a statement allowed before the conditional exit
+-(1726 - 1825)Change case statement handling to handle the Quby optional else clause. The else clause is much like another case alternative, except emitted after the tCaseEnd
+-(1976 - 2010)Add TernaryOperator Rule for substring $, the TenaryOpeator need do type checking for two integer and one String to satisfy
+-(2012 - 2106)In BinaryOperator rule,, add chioce for string concatenate in sAdd choice, for sEq and sNe choice, and handling for the tStringEqual and String not equal
+ In addition, add choice sIndex for handling the string index(?) operator
+ Do TypeChecking for string twice since the format is: expression ? expression
+-(1947 - 1974)In UnaryOperator, add sLength choice to handle the string length, do one type checking for string since the format is: #"Karim" = 5
+-(1880 - 1891)In Operand Rule, since tpChar is no longer need, remove the choice in sStringLiteral choice
+-(1898 - 1943)In StringLiteral rule, since we no longer need the tSkipString and tStringDescriptor in the T-code for string literals, The T-code for a string literal should simply be tLiteralString
+-Change handling of string constants to act like var instead
+
+semantic.pt:
+-(54 - 506)Update the semantic operations, type values ,input tokens, T-code tokens to those generated in semantic.def when compile with semantic.ssl
+-Change the Predefined type for Char to be a predefined type for String in the predefined type table entires and the initialization. Change all references to the Char type ref in the program to reference String instead
+-(1800 - 1832)Add oSymbolTblStripScope and oSymbolTblMergeScope TO THE SslWalker
+-(2405)Change oAllocateVariable to handle allocation of Strings(size 1024)
+-(1814,1838,1951,2000,2119,2128)Change all the assertions that inssit on the top of the SymbolStack being syProcedure to allow for syPublicProcedure

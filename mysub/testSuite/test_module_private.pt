@@ -1,0 +1,5 @@
+using output
+module M
+    def A() end
+end
+A

@@ -1,0 +1,6 @@
+using output
+if "a" != "b" then
+    val a = 5
+else
+    val b = 6
+end

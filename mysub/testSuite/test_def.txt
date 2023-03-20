@@ -1,2 +1,0 @@
-test def which is Quby routines(methods) 
-the test hand on the public and non public function

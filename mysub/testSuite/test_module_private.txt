@@ -1,0 +1,4 @@
+test Module statement with private function, according to the output
+we can there is the error exist since, the private procedure cannot be accessed
+   #eUndefinedIdentifier
+   #eProcedureReqd
