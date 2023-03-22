@@ -1,0 +1,2 @@
+test do statement
+ .tDoBegin .tDoBreakif .tDoEnd output correctly

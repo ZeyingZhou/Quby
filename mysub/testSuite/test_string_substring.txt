@@ -1,1 +1,9 @@
 test string substring
+     .tLiteralInteger
+     oEmitValue
+     % value emitted 1
+     .tLiteralInteger
+     oEmitValue
+     % value emitted 3
+     .tSubstring 
+output two integer and the .tSubstring

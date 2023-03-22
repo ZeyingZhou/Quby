@@ -1,1 +1,2 @@
 test the else case statement
+.tCaseElse .tCaseMerge token output correctly

@@ -1,1 +1,2 @@
 test string index
+   .tIndex output

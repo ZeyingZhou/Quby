@@ -1,1 +1,2 @@
 test type define and declaration
+recognize A as integer during declaration

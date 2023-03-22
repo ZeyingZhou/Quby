@@ -43,3 +43,7 @@ semantic.pt:
 -(1800 - 1832)Add oSymbolTblStripScope and oSymbolTblMergeScope TO THE SslWalker
 -(2405)Change oAllocateVariable to handle allocation of Strings(size 1024)
 -(1814,1838,1951,2000,2119,2128)Change all the assertions that inssit on the top of the SymbolStack being syProcedure to allow for syPublicProcedure
+
+testSuite:
+    Phase3 TestSuite is in the mysub/testSuite folder
+    The testing Documentation has been created for each test.
